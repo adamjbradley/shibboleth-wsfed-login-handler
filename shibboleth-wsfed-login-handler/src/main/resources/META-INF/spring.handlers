@@ -1,1 +1,2 @@
 http\://www.identityconcepts.com.au/idc/idp/wsfed = com.identityconcepts.shibboleth.WSFedNamespaceHandler
+http\://www.identityconcepts.com.au/idc/idp/wstrust = com.identityconcepts.shibboleth.WSFedActiveNamespaceHandler

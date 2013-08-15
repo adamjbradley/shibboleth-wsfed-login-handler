@@ -1,5 +1,5 @@
 /*
- * Copyright [2012] [SWITCH]
+ * Copyright [2013] [Identity Concepts]
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-package com.identityconcepts.shibboleth.shibboleth_wsfed_login_handler;
-import com.identityconcepts.shibboleth.shibboleth_wsfed_login_handler.*;
+package com.identityconcepts.shibboleth;
+import com.identityconcepts.shibboleth.*;
 
 import edu.internet2.middleware.shibboleth.idp.config.profile.authn.AbstractLoginHandlerFactoryBean;
 

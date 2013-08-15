@@ -1,5 +1,5 @@
 /*
- * Copyright [2012] [SWITCH]
+ * Copyright [2013] [Identity Concepts]
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package com.identityconcepts.shibboleth.shibboleth_wsfed_login_handler;
+package com.identityconcepts.shibboleth;
 
 import edu.internet2.middleware.shibboleth.common.config.BaseSpringNamespaceHandler;
 
-import com.identityconcepts.shibboleth.shibboleth_wsfed_login_handler.*;
+import com.identityconcepts.shibboleth.*;
 
-public class WSFedNamespaceHandler extends BaseSpringNamespaceHandler {
+public class WSFedActiveNamespaceHandler extends BaseSpringNamespaceHandler {
 
     /** Namespace URI. */
-    public static final String NAMESPACE = "http://www.switch.ch/aai/idp/x509";
+    public static final String NAMESPACE = "http://www.identityconcepts.com.au/idc/idp/wstrust";
 
     public void init(){
-        registerBeanDefinitionParser(WSFedLoginHandlerBeanDefinitionParser.SCHEMA_TYPE,
-                new WSFedLoginHandlerBeanDefinitionParser());
+        registerBeanDefinitionParser(WSFedPasiveLoginHandlerBeanDefinitionParser.SCHEMA_TYPE,
+                new WSFedActiveLoginHandlerBeanDefinitionParser());        
     }
 }

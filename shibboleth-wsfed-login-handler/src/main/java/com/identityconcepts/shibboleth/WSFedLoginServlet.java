@@ -1,5 +1,5 @@
 /*
- * Copyright [2012] [SWITCH]
+ * Copyright [2013] [Identity Concepts]
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.identityconcepts.shibboleth.shibboleth_wsfed_login_handler;
+package com.identityconcepts.shibboleth;
 
 import java.security.Principal;
 import java.security.cert.CertificateParsingException;
@@ -98,8 +98,8 @@ public class WSFedLoginServlet extends HttpServlet {
             response.addCookie(cookie);
         }
 
-        this.log.trace("Set request attribute {} to {}", LoginHandler.AUTHENTICATION_METHOD_KEY, AuthnContext.X509_AUTHN_CTX);
-        request.setAttribute(LoginHandler.AUTHENTICATION_METHOD_KEY, AuthnContext.X509_AUTHN_CTX);
+        this.log.trace("Set request attribute {} to {}", LoginHandler.AUTHENTICATION_METHOD_KEY, AuthnContext.PASSWORD_AUTHN_CTX);
+        request.setAttribute(LoginHandler.AUTHENTICATION_METHOD_KEY, AuthnContext.PASSWORD_AUTHN_CTX);
         AuthenticationEngine.returnToAuthenticationEngine(request, response);
     }
 

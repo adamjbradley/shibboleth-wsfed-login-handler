@@ -1,5 +1,5 @@
 /*
- * Copyright [2012] [Identity Concepts]
+ * Copyright [2013] [Identity Concepts]
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.identityconcepts.shibboleth.shibboleth_wsfed_login_handler;
+package com.identityconcepts.shibboleth;
 import javax.xml.namespace.QName;
 
 import org.opensaml.xml.util.DatatypeHelper;
@@ -23,10 +23,10 @@ import org.w3c.dom.Element;
 
 import edu.internet2.middleware.shibboleth.idp.config.profile.authn.AbstractLoginHandlerBeanDefinitionParser;
 
-public class WSFedLoginHandlerBeanDefinitionParser extends AbstractLoginHandlerBeanDefinitionParser {
+public class WSFedActiveLoginHandlerBeanDefinitionParser extends AbstractLoginHandlerBeanDefinitionParser {
 
     /** Schema type. */
-    public static final QName SCHEMA_TYPE = new QName(WSFedNamespaceHandler.NAMESPACE, "X509");
+    public static final QName SCHEMA_TYPE = new QName(WSFedPassiveNamespaceHandler.NAMESPACE, "wstrust");
 
     /** {@inheritDoc} */
     protected Class getBeanClass(Element element) {
@@ -36,9 +36,5 @@ public class WSFedLoginHandlerBeanDefinitionParser extends AbstractLoginHandlerB
     /** {@inheritDoc} */
     protected void doParse(Element config, BeanDefinitionBuilder builder) {
         super.doParse(config, builder);
-
-        builder.addPropertyValue("authenticationServletURL", DatatypeHelper.safeTrim(config.getAttributeNS(null, "authenticationServletURL")));
-        builder.addPropertyValue("loginPageURL", DatatypeHelper.safeTrim(config.getAttributeNS(null, "loginPageURL")));
-        builder.addPropertyValue("cookieDomain", DatatypeHelper.safeTrim(config.getAttributeNS(null, "cookieDomain")));
     }
 }

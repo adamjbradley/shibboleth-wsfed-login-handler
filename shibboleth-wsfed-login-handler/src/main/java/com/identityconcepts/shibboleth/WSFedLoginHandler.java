@@ -1,5 +1,3 @@
-package com.identityconcepts.shibboleth.shibboleth_wsfed_login_handler;
-
 /*
  * Copyright [2013] [Identity Concepts]
  *
@@ -16,22 +14,109 @@ package com.identityconcepts.shibboleth.shibboleth_wsfed_login_handler;
  * limitations under the License.
  */
 
+package com.identityconcepts.shibboleth;
+
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.mozilla.javascript.xml.XMLLib;
 import org.opensaml.util.URLBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.opensaml.Configuration;
+import org.opensaml.common.SAMLObjectBuilder;
+import org.opensaml.common.binding.decoding.SAMLMessageDecoder;
+import org.opensaml.common.xml.SAMLConstants;
+import org.opensaml.saml2.binding.AuthnResponseEndpointSelector;
+import org.opensaml.saml2.core.AttributeStatement;
+import org.opensaml.saml2.core.AuthnContext;
+import org.opensaml.saml2.core.AuthnContextClassRef;
+import org.opensaml.saml2.core.AuthnContextDeclRef;
+import org.opensaml.saml2.core.AuthnRequest;
+import org.opensaml.saml2.core.AuthnStatement;
+import org.opensaml.saml2.core.Response;
+import org.opensaml.saml2.core.Statement;
+import org.opensaml.saml2.core.StatusCode;
+import org.opensaml.saml2.core.SubjectLocality;
+import org.opensaml.saml2.metadata.AssertionConsumerService;
+import org.opensaml.saml2.metadata.Endpoint;
+import org.opensaml.saml2.metadata.EntityDescriptor;
+import org.opensaml.saml2.metadata.IDPSSODescriptor;
+import org.opensaml.saml2.metadata.SPSSODescriptor;
+import org.opensaml.saml1.*;
+import org.opensaml.saml1.binding.*;
+import org.opensaml.saml1.binding.artifact.*;
+import org.opensaml.saml1.binding.decoding.*;
+import org.opensaml.saml1.binding.encoding.*;
+import org.opensaml.saml1.core.*;
+import org.opensaml.saml1.core.impl.*;
+import org.opensaml.saml1.core.validator.*;
+import org.opensaml.ws.message.decoder.MessageDecodingException;
+import org.opensaml.ws.message.encoder.MessageEncodingException;
+import org.opensaml.ws.transport.http.HTTPInTransport;
+import org.opensaml.ws.transport.http.HTTPOutTransport;
+import org.opensaml.ws.transport.http.HttpServletRequestAdapter;
+import org.opensaml.xml.io.Unmarshaller;
+import org.opensaml.xml.io.UnmarshallingException;
+import org.opensaml.xml.security.SecurityException;
+import org.opensaml.xml.util.DatatypeHelper;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.xml.security.c14n.CanonicalizationException;
+import org.apache.xml.security.c14n.Canonicalizer;
+import org.apache.xml.security.c14n.InvalidCanonicalizerException;
 
 import edu.internet2.middleware.shibboleth.idp.authn.provider.AbstractLoginHandler;
 
+//XML Handlers
+import org.opensaml.xml.parse.ParserPool;
+
+
+import org.opensaml.Configuration;
+import org.opensaml.common.xml.SAMLConstants;
+import org.opensaml.saml1.core.Assertion;
+import org.opensaml.saml1.core.NameIdentifier;
+import org.opensaml.saml1.core.NameIdentifier;
+import org.opensaml.saml1.core.Request;
+import org.opensaml.saml2.metadata.Endpoint;
+import org.opensaml.saml2.metadata.EntityDescriptor;
+import org.opensaml.saml2.metadata.KeyDescriptor;
+import org.opensaml.saml2.metadata.SPSSODescriptor;
+import org.opensaml.saml2.metadata.provider.MetadataProvider;
+import org.opensaml.saml2.metadata.provider.MetadataProviderException;
+import org.opensaml.ws.transport.http.HTTPInTransport;
+import org.opensaml.ws.transport.http.HTTPOutTransport;
+import org.opensaml.xml.XMLObjectBuilder;
+import org.opensaml.xml.io.Marshaller;
+import org.opensaml.xml.io.MarshallingException;
+import org.opensaml.xml.security.SecurityException;
+import org.opensaml.xml.security.SecurityHelper;
+import org.opensaml.xml.security.credential.Credential;
+import org.opensaml.xml.signature.Signature;
+import org.opensaml.xml.signature.SignatureException;
+import org.opensaml.xml.signature.Signer;
+
+
 public class WSFedLoginHandler extends AbstractLoginHandler {
     private final Logger log = LoggerFactory.getLogger(WSFedLoginHandler.class);
-    private static final String COOKIE_NAME = "_idp_login_X509_pass-through";
+    private static final String COOKIE_NAME = "shibboleth-processed";
+      
+	private static final String WA = "wsignin1.0";
+	private static final String WS_FED_PROTOCOL_ENUM = "http://schemas.xmlsoap.org/ws/2003/07/secext";
+	private static final Collection SUPPORTED_IDENTIFIER_FORMATS = Arrays.asList(new String[]{
+			"urn:oasis:names:tc:SAML:1.1nameid-format:emailAddress", "http://schemas.xmlsoap.org/claims/UPN",
+			"http://schemas.xmlsoap.org/claims/CommonName"});
+	private static final String CLAIMS_URI = "http://schemas.xmlsoap.org/claims";
 
+    
     private static String loginPageURL;
     private static String authenticationServletURL;
     private static String cookieDomain;
@@ -156,5 +241,6 @@ public class WSFedLoginHandler extends AbstractLoginHandler {
             cookie.setDomain(cookieDomain);
         }
         return cookie;
-    }
+    }           
 }
+

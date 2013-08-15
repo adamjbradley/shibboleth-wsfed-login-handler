@@ -117,17 +117,6 @@
 
     <developers>
         <developer>
-            <id>reusser</id>
-            <name>Halm Reusser</name>
-            <organization>SWITCH</organization>
-            <organizationUrl>http://www.switch.ch/</organizationUrl>
-            <roles>
-                <role>developer</role>
-                <role>documentation</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-        <developer>
             <id>adam_j_bradley</id>
             <name>Adam Bradley</name>
             <organization>Identity Concepts</organization>
