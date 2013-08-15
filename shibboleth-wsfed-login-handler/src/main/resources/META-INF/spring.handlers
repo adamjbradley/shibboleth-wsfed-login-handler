@@ -1,1 +1,1 @@
-http\://www.switch.ch/aai/idp/x509 = ch.SWITCH.aai.idp.x509.X509NamespaceHandler
+http\://www.identityconcepts.com.au/idc/idp/wsfed = com.identityconcepts.shibboleth.WSFedNamespaceHandler

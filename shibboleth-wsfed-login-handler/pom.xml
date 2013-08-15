@@ -8,12 +8,23 @@
   <packaging>jar</packaging>
 
   <name>shibboleth-wsfed-login-handler</name>
-  <url>http://maven.apache.org</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+	<repositories>
+        <repository>
+            <id>shibboleth.internet2.edu</id>
+            <name>Internet2</name>
+            <layout>default</layout>
+            <url>https://build.shibboleth.net/nexus/content/groups/public</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -32,4 +43,102 @@
     
     
   </dependencies>
+  
+      <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <debug>true</debug>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/main/assembly/bin.xml</descriptor>
+                        <descriptor>src/main/assembly/src.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attached</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <links>
+                        <link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
+                    </links>
+                    <quiet>true</quiet>
+                    <author>false</author>
+                    <version>true</version>
+                    <doctitle>${project.name} ${project.version} Java API.</doctitle>
+                    <windowtitle>${project.name} ${project.version} Java API.</windowtitle>
+                    <overview>src/main/java/overview.html</overview>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+    
+    
+    <!-- Project Metadata -->
+    <url>http://www.identityconcpets.com.au/</url>
+    
+    <inceptionYear>2013</inceptionYear>
+        <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>package</distribution>
+        </license>
+    </licenses>
+    
+    <organization>
+        <name>Identity Concepts</name>
+        <url>http://www.identityconcepts.com.au/</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <id>reusser</id>
+            <name>Halm Reusser</name>
+            <organization>SWITCH</organization>
+            <organizationUrl>http://www.switch.ch/</organizationUrl>
+            <roles>
+                <role>developer</role>
+                <role>documentation</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>adam_j_bradley</id>
+            <name>Adam Bradley</name>
+            <organization>Identity Concepts</organization>
+            <organizationUrl>http://www.identityconcepts.com.au/</organizationUrl>
+            <roles>
+                <role>developer</role>
+                <role>documentation</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+  
+  
 </project>

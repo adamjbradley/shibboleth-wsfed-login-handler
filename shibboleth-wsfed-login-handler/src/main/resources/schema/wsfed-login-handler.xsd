@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema targetNamespace="http://www.switch.ch/aai/idp/x509"
+<schema targetNamespace="http://www.identityconcepts.com.au/idc/idp/wsfed"
             xmlns="http://www.w3.org/2001/XMLSchema"
             xmlns:ph="urn:mace:shibboleth:2.0:idp:profile-handler"
             elementFormDefault="qualified">
@@ -7,7 +7,7 @@
     <import namespace="urn:mace:shibboleth:2.0:idp:profile-handler" 
             schemaLocation="classpath:/schema/shibboleth-2.0-idp-profile-handler.xsd" /> 
    
-    <complexType name="X509">
+    <complexType name="wsfed">
         <complexContent>
             <extension base="ph:LoginHandlerType">
                 <attribute name="authenticationServletURL" type="string" use="required"/>
